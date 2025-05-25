@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notify-deployment
+spec:
+  selector:
+    matchLabels:
+      app: notify
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: notify
+    spec:
+      containers:
+        - name: notify
+          image: prongbang/notify:1.0.0
+          ports:
+            - containerPort: 9001

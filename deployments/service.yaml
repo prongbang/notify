@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notify-service
+spec:
+  ports:
+    - port: 9001
+      targetPort: 9001
+  selector:
+    app: notify
+  type: LoadBalancer

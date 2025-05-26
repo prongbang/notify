@@ -22,11 +22,7 @@ spec:
           ports:
             - containerPort: {{ .Values.service.targetPort }}
           env:
-            - name: DISCORD_WEBHOOK_URL
-              value: {{ .Values.env.DISCORD_WEBHOOK_URL | quote }}
-          env:
-            - name: BUDDHA_ENDPOINT
-              value: {{ .Values.env.BUDDHA_ENDPOINT | quote }}
-          env:
-            - name: API_KEY
-              value: {{ .Values.env.API_KEY | quote }}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}

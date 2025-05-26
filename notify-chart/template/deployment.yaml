@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-deployment
+  labels:
+    app: {{ .Values.app.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  replicas: {{ .Values.replicas }}
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      containers:
+        - name: {{ .Values.app.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: DISCORD_WEBHOOK_URL
+              value: {{ .Values.env.DISCORD_WEBHOOK_URL | quote }}
+          env:
+            - name: BUDDHA_ENDPOINT
+              value: {{ .Values.env.BUDDHA_ENDPOINT | quote }}
+          env:
+            - name: API_KEY
+              value: {{ .Values.env.API_KEY | quote }}

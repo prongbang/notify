@@ -1,0 +1,19 @@
+image:
+  repository: prongbang/notify
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+
+replicas: 1
+
+env:
+  DISCORD_WEBHOOK_URL: ""
+  BUDDHA_ENDPOINT: ""
+  API_KEY: ""
+
+service:
+  port: 9001
+  targetPort: 9001
+  type: LoadBalancer
+
+app:
+  name: notify

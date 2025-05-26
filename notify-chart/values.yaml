@@ -9,6 +9,7 @@ env:
   DISCORD_WEBHOOK_URL: ""
   BUDDHA_ENDPOINT: ""
   API_KEY: ""
+  SERVER_HOST: "0.0.0.0"
 
 service:
   port: 9001

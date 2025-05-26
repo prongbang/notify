@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: notify
-          image: prongbang/notify:1.0.0
+          image: prongbang/notify:1.0.1
           ports:
             - containerPort: 9001

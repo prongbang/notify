@@ -1,10 +1,10 @@
 build_image:
-	docker buildx build -t prongbang/notify:latest -f deployments/Dockerfile .
+	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t prongbang/notify:latest -f deployments/Dockerfile .
 
 push_image:
-	docker tag prongbang/notify:latest prongbang/notify:1.0.0
+	docker tag prongbang/notify:latest prongbang/notify:1.0.1
 	docker image push prongbang/notify:latest
-	docker image push prongbang/notify:1.0.0
+	docker image push prongbang/notify:1.0.1
 
 build_push_image:
 	make build_image

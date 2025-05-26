@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: {{ .Values.app.name }}
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.autoscaling.minReplicas | default .Values.replicas }}
   template:
     metadata:
       annotations:
@@ -26,3 +26,11 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
+          # Resource for HPA
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}

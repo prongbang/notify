@@ -1,10 +1,40 @@
 image:
   repository: docker.io/prongbang/notify
-  tag: "1.0.1"
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 replicas: 1
 
+# Resources (needed for HPA)
+resources:
+  requests:
+    cpu: 100m # 0.1 CPU core
+    memory: 128Mi # 128 MB
+  limits:
+    cpu: 500m # 0.5 CPU core
+    memory: 512Mi # 512 MB
+
+# Auto Scaling Configuration (HPA)
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+  # Custom metrics (optional)
+  targetRequestsPerSecond: "100"
+
+  # Scaling Behavior
+  scaleDown:
+    stabilizationWindowSeconds: 300 # รอ 5 นาทีก่อน scale down
+    percent: 50 # scale down สูงสุด 50% ต่อครั้ง
+    periodSeconds: 60 # ทุก 1 นาที
+  scaleUp:
+    stabilizationWindowSeconds: 0 # scale up ทันที
+    percent: 100 # scale up สูงสุด 100% ต่อครั้ง
+    periodSeconds: 15 # ทุก 15 วินาที
+
+# Can update later at ArgoCD > Application > notify > Details > Parameters
 env:
   DISCORD_WEBHOOK_URL: ""
   BUDDHA_ENDPOINT: ""

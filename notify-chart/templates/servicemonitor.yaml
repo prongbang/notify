@@ -1,0 +1,17 @@
+# ServiceMonitor (for Custom Metrics)
+{{- if .Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Values.app.name }}-metrics
+  labels:
+    app: {{ .Values.app.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+{{- end }}
